@@ -39,8 +39,8 @@ public class DistanceCalculatorController {
             }
 
             distance = this.distanceCalculatorService.calculateDistance(convertModel(requestModel.getPointA(), "pointA"),
-                    convertModel(requestModel.getPointB(), "PointB"),
-                    DistanceUnit.findByAbbreviation(distanceUnit));
+                                                                        convertModel(requestModel.getPointB(), "PointB"),
+                                                                        DistanceUnit.findByAbbreviation(distanceUnit));
         } catch (DistanceException distanceException) {
             // On error return error message
             return ResponseEntity.internalServerError().body(distanceException.getMessage());

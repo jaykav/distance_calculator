@@ -6,12 +6,24 @@ import com.woodwing.distance.calculator.convertor.manager.ConvertorManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service to calculate distance.
+ */
 @Service
 public class DistanceCalculatorService {
 
     @Autowired
     private ConvertorManager convertorManager;
 
+    /**
+     * Calculate distance with given {@code pointA} ,{@code pointB} in the specified distance unit  {@code toDistance}
+     *
+     * @param pointA expected this to be not null
+     * @param pointB expected this to be not null
+     * @param toDistance expected this to be not null
+     * @return returns the distance with unit. e.g: 37.5 Meters.
+     * @throws DistanceException on error
+     */
     public String calculateDistance(Point pointA, Point pointB, DistanceUnit toDistance) throws DistanceException {
         Point point = calculatorDistance(pointA, pointB, toDistance);
         return point.getDistance() + " " + point.getUnit().toString();

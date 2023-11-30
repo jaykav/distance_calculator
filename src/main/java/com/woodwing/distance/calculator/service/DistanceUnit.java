@@ -1,12 +1,12 @@
 package com.woodwing.distance.calculator.service;
 
-public enum CalculatorTypeEnum {
+public enum DistanceUnit {
 
     YARD("YARD"), METER("METER");
 
     private final String abbreviation;
 
-    CalculatorTypeEnum(String abbreviation) {
+    DistanceUnit(String abbreviation) {
         this.abbreviation = abbreviation;
     }
 
@@ -15,8 +15,8 @@ public enum CalculatorTypeEnum {
     }
 
     // Helper method to find enum by string value
-    public static CalculatorTypeEnum findByAbbreviation(String abbreviation) {
-        for (CalculatorTypeEnum size : CalculatorTypeEnum.values()) {
+    public static DistanceUnit findByAbbreviation(String abbreviation) {
+        for (DistanceUnit size : DistanceUnit.values()) {
             if (size.abbreviation.equals(abbreviation)) {
                 return size;
             }

@@ -19,7 +19,9 @@ public enum DistanceUnit {
         return abbreviation;
     }
 
-    // Helper method to find enum by string value
+    /**
+     * Helper method to find enum by string value
+     */
     public static DistanceUnit findByAbbreviation(String abbreviation) throws DistanceException {
         if (abbreviation == null || abbreviation.isEmpty()){
             throw new DistanceException("Undefined unit!");

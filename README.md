@@ -1,5 +1,6 @@
 # distance_calculator
-REST API service to calculate distance
+REST API service to calculate distance.
+###### Separated implementation to service, controller layers. If new unit convertors were necessary IUnitConvertor implementation can be done for extendability. Newly created convertors has to be mentioned in ConvertorManager and DistanceUnit.
 
 # Prerequisite to run this:
 1. The machine running this program need the below:

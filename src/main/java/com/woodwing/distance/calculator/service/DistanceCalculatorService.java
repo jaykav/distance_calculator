@@ -1,29 +1,27 @@
 package com.woodwing.distance.calculator.service;
 
-import com.woodwing.distance.calculator.calculator.IDistanceCalculator;
-import com.woodwing.distance.calculator.calculator.impl.MeterDistanceCalculator;
-import com.woodwing.distance.calculator.calculator.impl.YardDistanceCalculator;
-import com.woodwing.distance.calculator.controller.model.DistanceRequestModel;
-import com.woodwing.distance.calculator.service.exception.DistanceException;
+import com.woodwing.distance.calculator.service.model.Point;
+import com.woodwing.distance.calculator.exception.DistanceException;
+import com.woodwing.distance.calculator.convertor.manager.ConvertorManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class DistanceCalculatorService {
 
-    private static Map<DistanceUnit, IDistanceCalculator> calculatorManager;
+    @Autowired
+    private ConvertorManager convertorManager;
 
-    static {
-        Map<DistanceUnit, IDistanceCalculator> tempManager = new HashMap<>();
-        tempManager.put(DistanceUnit.METER, new MeterDistanceCalculator());
-        tempManager.put(DistanceUnit.YARD, new YardDistanceCalculator());
-        calculatorManager = Collections.unmodifiableMap(tempManager);
+    public String calculateDistance(Point pointA, Point pointB, DistanceUnit toDistance) throws DistanceException {
+        Point point = calculatorDistance(pointA, pointB, toDistance);
+        return point.getDistance() + " " + point.getUnit().toString();
     }
 
-    public String calculateDistance(DistanceRequestModel model) throws DistanceException {
-        return null;
+    private Point calculatorDistance(Point pointA, Point pointB, DistanceUnit toType) throws DistanceException {
+        double distance1 = convertorManager.getConverted(pointA.getDistance(), pointA.getUnit(), toType);
+        double distance2 = convertorManager.getConverted(pointB.getDistance(), pointB.getUnit(), toType);
+        double distance = distance1 + distance2;
+
+        return new Point(distance, toType);
     }
 }

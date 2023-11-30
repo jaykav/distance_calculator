@@ -1,8 +1,11 @@
 package com.woodwing.distance.calculator.controller;
 
-import com.woodwing.distance.calculator.controller.model.DistanceRequestModel;
+import com.woodwing.distance.calculator.model.DistanceRequestModel;
+import com.woodwing.distance.calculator.model.RequestPointModel;
 import com.woodwing.distance.calculator.service.DistanceCalculatorService;
-import com.woodwing.distance.calculator.service.exception.DistanceException;
+import com.woodwing.distance.calculator.exception.DistanceException;
+import com.woodwing.distance.calculator.service.DistanceUnit;
+import com.woodwing.distance.calculator.service.model.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +31,16 @@ public class DistanceCalculatorController {
 
         String distance = null;
         try {
-            distance = this.distanceCalculatorService.calculateDistance(requestModel);
+
+            String distanceUnit = requestModel.getResponseDistanceUnit();
+
+            if (distanceUnit == null || distanceUnit.isEmpty()){
+                return ResponseEntity.internalServerError().body("Undefined responseDistanceUnit!");
+            }
+
+            distance = this.distanceCalculatorService.calculateDistance(convertModel(requestModel.getPointA(), "pointA"),
+                    convertModel(requestModel.getPointB(), "PointB"),
+                    DistanceUnit.findByAbbreviation(distanceUnit));
         } catch (DistanceException distanceException) {
             // On error return error message
             return ResponseEntity.internalServerError().body(distanceException.getMessage());
@@ -37,4 +49,9 @@ public class DistanceCalculatorController {
         return ResponseEntity.ok(distance);
     }
 
+    private Point convertModel(RequestPointModel pointModel, String errorPrefix) throws DistanceException {
+        if (pointModel == null) throw new DistanceException(errorPrefix + " is undefined!");
+        DistanceUnit distanceUnit = DistanceUnit.findByAbbreviation(pointModel.getUnit());
+        return new Point(pointModel.getDistance(), distanceUnit);
+    }
 }

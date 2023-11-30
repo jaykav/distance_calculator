@@ -1,4 +1,4 @@
-package com.woodwing.distance.calculator.service.exception;
+package com.woodwing.distance.calculator.exception;
 
 public class DistanceException extends Exception{
     public DistanceException(String message){

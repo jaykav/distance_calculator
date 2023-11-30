@@ -13,4 +13,23 @@ REST API service to calculate distance
 
 ## 2. Running the jar(This requires the program compiled):
     java -jar target\distrance_calculator-0.0.1-SNAPSHOT.jar
-    
+
+
+## REST API:
+## 1. Get distance:
+#### GET: http://localhost:8084/wing/v1/distance
+#### sample request body:
+      {
+         "pointA": {
+            "distance": 10.0,
+            "unit": "METER"
+         },
+            "pointB": {
+            "distance": 20.0,
+            "unit": "yard"
+         },
+         "responseDistanceUnit": "METER"
+      }
+
+#### sample Response body:
+      28.288 METER

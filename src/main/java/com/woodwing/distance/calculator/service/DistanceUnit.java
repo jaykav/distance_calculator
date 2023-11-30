@@ -2,6 +2,9 @@ package com.woodwing.distance.calculator.service;
 
 import com.woodwing.distance.calculator.exception.DistanceException;
 
+/**
+ * Supported distance conversion units.
+ */
 public enum DistanceUnit {
 
     YARD("YARD"), METER("METER");
